@@ -28,6 +28,8 @@
 
 //Main competition background code...do not modify!
 #include "Vex_Competition_Includes.c"
+#include "Genral.c"
+
 #include "JohnFunctions.c"
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -41,6 +43,12 @@
 
 void pre_auton()
 {
+	SensorValue(fWheel)=0;
+	setPIDValues();
+	fWheelPidEnabled=true
+	drivePidEnabled=true
+
+
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks
   // running between Autonomous and Driver controlled modes. You will need to
   // manage all user created tasks if set to false.
@@ -67,6 +75,7 @@ void pre_auton()
 
 task autonomous()
 {
+task startTask (drivePid);
 
 	flyEnable(79);
 	delay(2000);
@@ -124,6 +133,9 @@ task autonomous()
 
 task usercontrol()
 {
+startTask(pid);
+setPIDValues();
+
 	int drive;
 
 //main driving code
