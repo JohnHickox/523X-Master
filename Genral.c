@@ -12,7 +12,7 @@ typedef struct
 } PIDValues;
 
 PIDValues drivePIDValues;
-PIDValues LiftPidValues;
+PIDValues fWheelPidValues;
 PIDValues turnPidValues;
 void setPIDValues()
 {
@@ -20,9 +20,9 @@ void setPIDValues()
 	drivePIDValues.kP = 0.0;
 	drivePIDValues.kI = 0.00;
 	drivePIDValues.kD = 0.0;
-	LiftPidValues.kP = 0.0;
-	LiftPidValues.kI = 0.00;
-	LiftPidValues.kD = 0.0;
+	fWheelPidValues.kP = 0.0;
+	fWheelPidValues.kI = 0.00;
+	fWheelPidValues.kD = 0.0;
 	turnPIDValues.kP = 0.0;
 	turnPIDValues.kI = 0.00;
 	turnPIDValues.kD = 0.00;

@@ -1,11 +1,13 @@
 #pragma config(Sensor, in1,    speedy,         sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  ,               sensorTouch)
-#pragma config(Sensor, dgtl8,  touchy,         sensorTouch)
-#pragma config(Sensor, dgtl9,  dudy,           sensorQuadEncoder)
-#pragma config(Motor,  port1,           drive1,        tmotorVex393_HBridge, openLoop)
-#pragma config(Motor,  port2,           drive2,        tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port3,           drive3,        tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port4,           drive4,        tmotorVex393_MC29, openLoop)
+#pragma config(Sensor, dgtl4,  drive,          sensorQuadEncoder)
+#pragma config(Sensor, dgtl6,  drive1,         sensorQuadEncoder)
+#pragma config(Sensor, dgtl8,  ,               sensorTouch)
+#pragma config(Sensor, dgtl11, fWheel,         sensorQuadEncoder)
+#pragma config(Motor,  port1,           bRDrive,       tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port2,           FRdrive,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port3,           bLDrive,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port4,           fLDrive,       tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           fly1,          tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port6,           fly2,          tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port7,           lift1,         tmotorVex393_MC29, openLoop)
@@ -29,7 +31,7 @@
 //Main competition background code...do not modify!
 #include "Vex_Competition_Includes.c"
 #include "Genral.c"
-
+#include "chassis.c"
 #include "JohnFunctions.c"
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -45,8 +47,8 @@ void pre_auton()
 {
 	SensorValue(fWheel)=0;
 	setPIDValues();
-	fWheelPidEnabled=true
-	drivePidEnabled=true
+	fWheelPidEnabled=true;
+	drivePidEnabled=true;
 
 
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks
@@ -75,7 +77,7 @@ void pre_auton()
 
 task autonomous()
 {
-task startTask (drivePid);
+startTask(drivePid);
 
 	flyEnable(79);
 	delay(2000);

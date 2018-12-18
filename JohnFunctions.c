@@ -60,3 +60,21 @@ void flyDisable(){
 	motor[port9] = 0;
 	motor[port10] = 0;
 }
+
+//PID STARTS HERE
+
+void setfWheel(int pwr )
+{
+	motor[fly1]=motor[fly2]=pwr;
+}
+
+
+bool fWheelPidEnabled = false;
+	int fWheelTarget=0;
+task pid{
+while (true){
+	if (fWheelPidEnabled)
+	setfWheel(myPID(fWheelTarget,fWheelPidValues,fWheel));
+	wait1Msec(20);
+}
+}
