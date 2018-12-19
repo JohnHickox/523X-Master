@@ -1,3 +1,4 @@
+PID ChassisValues;
 typedef struct
 {
 
@@ -10,7 +11,22 @@ typedef struct
 	float integral;
 
 } PIDValues;
+void setChassis( int lPwr, int rPwr )
+{
 
+	 motor[fLDrive] = motor[bLDrive]= lPwr;
+
+	 motor[fRDrive] =motor[bRDrive]= rPwr;
+
+}
+void setChassis( int Pwr)
+{
+
+ motor[fLDrive] = Pwr;
+
+ motor[fRDrive] = Pwr;
+
+}
 PIDValues drivePIDValues;
 PIDValues fWheelPidValues;
 PIDValues turnPidValues;
@@ -54,4 +70,34 @@ int myPID(int setpoint, PIDValues &PIDStruct, int errorSource){
 	PIDStruct.lastError = PIDStruct.error;
 
 	return power;
+}
+bool distancePIDEnabled = true;
+void chassisPID(  )
+{
+
+	int turn = 0;
+	int straight = 0;
+
+	if( distancePIDEnabled )
+		straight = PIDCalc(ChassisValues);
+
+
+
+	setChassis( straight, straight);
+
+}
+
+task PIDLoop
+{
+
+	while( true )
+	{
+
+
+			chassisPID( );
+
+		wait1Msec( 20 );
+
+	}
+
 }

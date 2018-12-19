@@ -1,20 +1,11 @@
 
-void setChassis( int lPwr, int rPwr )
-{
 
-	 motor[fLDrive] = lPwr;
 
-	 motor[fRDrive] = rPwr;
 
-}
-void setChassis( int Pwr)
-{
 
- motor[fLDrive] = Pwr;
 
- motor[fRDrive] = Pwr;
 
-}
+
 bool turnPidEnabled=false;
 bool drivePidEnabled = false;
 	int driveTarget=0;

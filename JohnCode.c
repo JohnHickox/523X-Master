@@ -4,8 +4,8 @@
 #pragma config(Sensor, dgtl6,  drive1,         sensorQuadEncoder)
 #pragma config(Sensor, dgtl8,  ,               sensorTouch)
 #pragma config(Sensor, dgtl11, fWheel,         sensorQuadEncoder)
-#pragma config(Motor,  port1,           bRDrive,       tmotorVex393_HBridge, openLoop)
-#pragma config(Motor,  port2,           FRdrive,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port1,           bRDrive,       tmotorVex393_HBridge, openLoop, reversed)
+#pragma config(Motor,  port2,           FRdrive,       tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           bLDrive,       tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           fLDrive,       tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           fly1,          tmotorVex393_MC29, openLoop)
@@ -29,10 +29,13 @@
 #pragma competitionControl(Competition)
 
 //Main competition background code...do not modify!
+
 #include "Vex_Competition_Includes.c"
+#include "motion.c"
 #include "Genral.c"
 #include "chassis.c"
 #include "JohnFunctions.c"
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -42,13 +45,20 @@
 /*  function is only called once after the cortex has been powered on and    */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-
+float p=1;
+float i=0;
+float d=0.05;
 void pre_auton()
 {
+startTask (PIDLoop);
 	SensorValue(fWheel)=0;
 	setPIDValues();
 	fWheelPidEnabled=true;
 	drivePidEnabled=true;
+PIDInit (ChassisValues,p,i,d,0,0,drive,0,20,30 );
+
+
+
 
 
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks
@@ -77,40 +87,41 @@ void pre_auton()
 
 task autonomous()
 {
-startTask(drivePid);
+//startTask(drivePid);
+startTask(PIDLoop);
+wait1Msec(10000000);
 
-	flyEnable(79);
-	delay(2000);
-	intakeEnable(127);
-	delay(1000);
-	lTurn(127);
-	delay(800);
-	motor[port1] = 127;
-	motor[port2] = 127;
-	motor[port3] = -120;
-	motor[port4] = -120;
-	delay(2250);
-	haultYo();
-	//2 FLAGS TURNED
-	// START OF CAP BALL INTAKE
-	goBackward(127);
-	wait1Msec(1720);
-	haultYo();
-	rTurn(127);
-	wait1Msec(400);
-	haultYo();
-	goBackward(127);
-	wait1Msec(1000);
-	intakeEnable(127);
-	wait1Msec(250);
-	haultYo();
-	intakeEnable(127);
-	wait1Msec(200);
-	goFoward(127);
-	wait1Msec(1250);
-	haultYo();
+	//flyEnable(79);
+	//delay(2000);
+	//intakeEnable(127);
+	//delay(1000);
+	//lTurn(127);
+	//delay(800);
+	//motor[port1] = 127;
+	//motor[port2] = 127;
+	//motor[port3] = -120;
+	//motor[port4] = -120;
+	//delay(2250);
+	//haultYo();
+	////2 FLAGS TURNED
+	//// START OF CAP BALL INTAKE
+	//goBackward(127);
+	//wait1Msec(1720);
+	//haultYo();
+	//rTurn(127);
+	//wait1Msec(400);
+	//haultYo();
+	//goBackward(127);
+	//wait1Msec(1000);
+	//intakeEnable(127);
+	//wait1Msec(250);
+	//haultYo();
+	//intakeEnable(127);
+	//wait1Msec(200);
+	//goFoward(127);
+	//wait1Msec(1250);
+	//haultYo();
 
-//while(SensorValue[touchy] == 0)
 {
 
 
@@ -157,13 +168,13 @@ setPIDValues();
 	{
 		motor[port4] = vexRT[Ch3];
 		motor[port3] = vexRT[Ch3];
-		motor[port2] = -vexRT[Ch2];
-		motor[port1] = -vexRT[Ch2];
+		motor[port2] = vexRT[Ch2];
+		motor[port1] = vexRT[Ch2];
 }
 else if(drive == -1)
 {
-		motor[port4] = -vexRT[Ch2];
-		motor[port3] = -vexRT[Ch2];
+		motor[port4] = vexRT[Ch2];
+		motor[port3] = vexRT[Ch2];
 		motor[port2] = vexRT[Ch3];
 		motor[port1] = vexRT[Ch3];
 }
